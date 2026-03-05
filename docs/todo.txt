@@ -1,0 +1,16 @@
+
+
+user auth, sign up login,
+
+session handling 
+
+guest allow, but limit usage only one allow with no reord saving in db
+
+generated record and card must be saved in db
+
+logged in user can see it history, 
+
+
+
+
+
