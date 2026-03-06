@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, Suspense } from 'react';
 import TextInputScreen from '@/components/TextInputScreen';
 import LoadingScreen from '@/components/LoadingScreen';
 import FlashcardScreen from '@/components/FlashcardScreen';
@@ -24,7 +24,7 @@ interface SessionStats {
   unlearnedTemplates: Flashcard[];
 }
 
-export default function Home() {
+function HomeContent() {
   const [currentScreen, setCurrentScreen] = useState<Screen>('input');
   const [transcript, setTranscript] = useState('');
   const [cardCount, setCardCount] = useState(10);
@@ -227,5 +227,13 @@ export default function Home() {
         />
       )}
     </div>
+  );
+}
+
+export default function Home() {
+  return (
+    <Suspense fallback={<LoadingScreen />}>
+      <HomeContent />
+    </Suspense>
   );
 }
