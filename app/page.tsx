@@ -117,7 +117,7 @@ export default function Home() {
       const data = await response.json();
       const content = data.choices[0]?.message?.content || '';
 
-      const jsonMatch = content.match(/\[\s*\{.*\}\s*\]/s);
+      const jsonMatch = content.match(/\[\s*\{[\s\S]*\}\s*\]/);
       if (!jsonMatch) {
         throw new Error('AI response did not contain a valid JSON array of flashcards.');
       }
