@@ -2,9 +2,12 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
+import SidebarWrapper from './SidebarWrapper';
+import { Suspense } from 'react';
 
 export default function Header() {
   const [isHowItWorksOpen, setIsHowItWorksOpen] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   return (
     <>
@@ -18,16 +21,39 @@ export default function Header() {
               Flash<span className="text-indigo-600">AI</span>
             </span>
           </Link>
-          <nav className="flex items-center space-x-8">
+          <nav className="flex items-center space-x-6">
             <button 
               onClick={() => setIsHowItWorksOpen(true)}
-              className="text-sm font-medium text-slate-600 dark:text-slate-400 hover:text-indigo-600 transition-colors cursor-pointer"
+              className="hidden md:block text-sm font-medium text-slate-600 dark:text-slate-400 hover:text-indigo-600 transition-colors cursor-pointer"
             >
               How it Works
+            </button>
+            <button
+              onClick={() => setIsMenuOpen(true)}
+              className="lg:hidden p-2 -mr-2 text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-xl transition-all"
+            >
+              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16m-7 6h7" />
+              </svg>
             </button>
           </nav>
         </div>
       </header>
+
+      {/* Mobile Drawer */}
+      {isMenuOpen && (
+        <div className="fixed inset-0 z-100 lg:hidden">
+          <div 
+            className="absolute inset-0 bg-slate-950/40 backdrop-blur-sm"
+            onClick={() => setIsMenuOpen(false)}
+          />
+          <div className="absolute right-0 top-0 h-full w-full max-w-sm bg-white dark:bg-slate-950 shadow-2xl animate-in slide-in-from-right duration-300">
+            <Suspense fallback={<div className="p-8">Loading history...</div>}>
+              <SidebarWrapper onClose={() => setIsMenuOpen(false)} />
+            </Suspense>
+          </div>
+        </div>
+      )}
 
       {/* How it Works Modal */}
       {isHowItWorksOpen && (

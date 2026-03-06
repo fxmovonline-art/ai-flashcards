@@ -4,7 +4,7 @@ import { useHistory } from "./HistoryProvider";
 import HistorySidebar from "./HistorySidebar";
 import { useRouter, useSearchParams } from "next/navigation";
 
-export default function SidebarWrapper() {
+export default function SidebarWrapper({ onClose }: { onClose?: () => void }) {
   const { history } = useHistory();
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -19,6 +19,7 @@ export default function SidebarWrapper() {
       history={history} 
       onSelect={handleSelect} 
       currentId={currentId} 
+      onClose={onClose}
     />
   );
 }

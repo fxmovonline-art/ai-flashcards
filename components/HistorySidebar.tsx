@@ -15,14 +15,26 @@ interface HistorySidebarProps {
   history: HistoryItem[];
   onSelect: (id: string) => void;
   currentId?: string;
+  onClose?: () => void;
 }
 
-export default function HistorySidebar({ history, onSelect, currentId }: HistorySidebarProps) {
+export default function HistorySidebar({ history, onSelect, currentId, onClose }: HistorySidebarProps) {
   const { data: session, status } = useSession();
 
   return (
-    <div className="w-72 h-screen fixed left-0 top-0 border-r border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-950 p-6 flex flex-col z-40">
-       <div className="mb-8 mt-16 px-2 flex flex-col h-full">
+    <div className="w-full h-full bg-white dark:bg-slate-950 p-6 flex flex-col relative">
+       <div className="flex flex-col h-full mt-4">
+         {/* Mobile Close Button */}
+         {onClose && (
+           <button 
+             onClick={onClose}
+             className="absolute top-4 right-4 p-2 bg-slate-100 dark:bg-slate-800 rounded-xl lg:hidden"
+           >
+             <svg className="w-6 h-6 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
+             </svg>
+           </button>
+         )}
          
          {/* User Info Section */}
          <div className="mb-8 p-4 bg-slate-50 dark:bg-slate-900 rounded-3xl border border-slate-100 dark:border-slate-800">
